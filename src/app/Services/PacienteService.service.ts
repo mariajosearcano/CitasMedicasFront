@@ -14,11 +14,18 @@ export class PacienteService {
   constructor(private httpClient: HttpClient) { }
 
   /**
-   * Obtiene la lista paginada de pacientes
-   * @param page Número de página (default: 0)
-   * @param size Tamaño de página (default: 10)
+   * Obtiene todos los pacientes sin paginación
    */
-  obtenerListaPacientes(page: number = 0, size: number = 10): Observable<any> {
+  obtenerTodosPacientes(): Observable<Paciente[]> {
+    return this.httpClient.get<Paciente[]>(this.pacientesURL);
+  }
+
+  /**
+   * Obtiene la lista paginada de pacientes
+   * @param page Número de página
+   * @param size Tamaño de página
+   */
+  getPacientesPage(page: number, size: number): Observable<any> {
     const params = new HttpParams()
       .set('page', page.toString())
       .set('size', size.toString());
@@ -27,11 +34,25 @@ export class PacienteService {
   }
 
   /**
-   * Obtiene todos los pacientes sin paginación
-   * Útil para llenar select/dropdown
+   * Alias para compatibilidad
    */
-  obtenerTodosPacientes(): Observable<Paciente[]> {
-    return this.httpClient.get<Paciente[]>(this.pacientesURL);
+  obtenerListaPacientes(page: number = 0, size: number = 10): Observable<any> {
+    return this.getPacientesPage(page, size);
+  }
+
+  /**
+   * Obtiene un paciente por su ID
+   * @param id ID del paciente
+   */
+  obtenerPacientePorId(id: number): Observable<Paciente> {
+    return this.httpClient.get<Paciente>(`${this.baseURL}/${id}`);
+  }
+
+  /**
+   * Alias para compatibilidad
+   */
+  getPacienteById(id: number): Observable<Paciente> {
+    return this.obtenerPacientePorId(id);
   }
 
   /**
@@ -40,6 +61,20 @@ export class PacienteService {
    */
   registrarPaciente(paciente: Paciente): Observable<Paciente> {
     return this.httpClient.post<Paciente>(`${environment.apiUrl}/savePaciente`, paciente);
+  }
+
+  /**
+   * Alias para compatibilidad
+   */
+  addPaciente(paciente: Paciente): Observable<Paciente> {
+    return this.registrarPaciente(paciente);
+  }
+
+  /**
+   * Alias para compatibilidad
+   */
+  savePaciente(paciente: Paciente): Observable<Paciente> {
+    return this.registrarPaciente(paciente);
   }
 
   /**
@@ -52,16 +87,14 @@ export class PacienteService {
   }
 
   /**
-   * Obtiene un paciente por su ID
-   * @param id ID del paciente
+   * Alias para compatibilidad
    */
-  obtenerPacientePorId(id: number): Observable<Paciente> {
-    return this.httpClient.get<Paciente>(`${this.baseURL}/${id}`);
+  updatePaciente(id: number, paciente: Paciente): Observable<Paciente> {
+    return this.actualizarPaciente(id, paciente);
   }
 
   /**
    * Elimina un paciente por su ID
-   * También elimina las citas asociadas automáticamente
    * @param id ID del paciente a eliminar
    */
   eliminarPaciente(id: number): Observable<any> {
@@ -69,17 +102,14 @@ export class PacienteService {
   }
 
   /**
-   * Busca pacientes por email
-   * @param email Email a buscar
+   * Alias para compatibilidad
    */
-  buscarPorEmail(email: string): Observable<Paciente> {
-    // Si necesitas implementar este endpoint en el backend
-    return this.httpClient.get<Paciente>(`${this.baseURL}/email/${email}`);
+  deletePaciente(id: number): Observable<any> {
+    return this.eliminarPaciente(id);
   }
 
   /**
-   * Calcula la edad del paciente basada en su fecha de nacimiento
-   * @param fechaNacimiento Fecha de nacimiento del paciente
+   * Calcula la edad del paciente
    */
   calcularEdad(fechaNacimiento: Date | string): number {
     const hoy = new Date();

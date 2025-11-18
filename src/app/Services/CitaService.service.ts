@@ -15,10 +15,8 @@ export class CitaService {
 
   /**
    * Obtiene la lista paginada de citas
-   * @param page Número de página (default: 0)
-   * @param size Tamaño de página (default: 10)
    */
-  obtenerListaCitas(page: number = 0, size: number = 10): Observable<any> {
+  getCitasPage(page: number, size: number): Observable<any> {
     const params = new HttpParams()
       .set('page', page.toString())
       .set('size', size.toString());
@@ -27,36 +25,73 @@ export class CitaService {
   }
 
   /**
-   * Registra una nueva cita
-   * @param cita Objeto cita a crear
+   * Alias para compatibilidad
    */
-  registrarCita(cita: Cita): Observable<Cita> {
-    return this.httpClient.post<Cita>(`${this.baseURL}/save`, cita);
-  }
-
-  /**
-   * Actualiza una cita existente
-   * @param id ID de la cita a actualizar
-   * @param cita Objeto cita con los nuevos datos
-   */
-  actualizarCita(id: number, cita: Cita): Observable<Cita> {
-    return this.httpClient.put<Cita>(`${environment.apiUrl}/updateCita/${id}`, cita);
+  obtenerListaCitas(page: number = 0, size: number = 10): Observable<any> {
+    return this.getCitasPage(page, size);
   }
 
   /**
    * Obtiene una cita por su ID
-   * @param id ID de la cita
    */
   obtenerCitaPorId(id: number): Observable<Cita> {
     return this.httpClient.get<Cita>(`${this.baseURL}/${id}`);
   }
 
   /**
+   * Alias para compatibilidad
+   */
+  getCitaById(id: number): Observable<Cita> {
+    return this.obtenerCitaPorId(id);
+  }
+
+  /**
+   * Registra una nueva cita
+   */
+  registrarCita(cita: Cita): Observable<Cita> {
+    return this.httpClient.post<Cita>(`${this.baseURL}/save`, cita);
+  }
+
+  /**
+   * Alias para compatibilidad
+   */
+  addCita(cita: Cita): Observable<Cita> {
+    return this.registrarCita(cita);
+  }
+
+  /**
+   * Alias para compatibilidad
+   */
+  saveCita(cita: Cita): Observable<Cita> {
+    return this.registrarCita(cita);
+  }
+
+  /**
+   * Actualiza una cita existente
+   */
+  actualizarCita(id: number, cita: Cita): Observable<Cita> {
+    return this.httpClient.put<Cita>(`${environment.apiUrl}/updateCita/${id}`, cita);
+  }
+
+  /**
+   * Alias para compatibilidad
+   */
+  updateCita(id: number, cita: Cita): Observable<Cita> {
+    return this.actualizarCita(id, cita);
+  }
+
+  /**
    * Elimina una cita por su ID
-   * @param id ID de la cita a eliminar
    */
   eliminarCita(id: number): Observable<any> {
     return this.httpClient.delete(`${environment.apiUrl}/deleteCita/${id}`);
+  }
+
+  /**
+   * Alias para compatibilidad
+   */
+  deleteCita(id: number): Observable<any> {
+    return this.eliminarCita(id);
   }
 
   /**
