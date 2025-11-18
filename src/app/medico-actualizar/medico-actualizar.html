@@ -1,0 +1,43 @@
+<div class="center-form">
+
+    <form>
+        <h3>Actualizar doctor</h3>
+        <img class="img-responsive" src="../../assets/registra-paciente-form.png">
+
+        <div>
+            <label class="label-class" for="nombres">Nombres:</label>
+            <input type="text" id="nombres" name="nombres" required placeholder="Nombres medico"
+                [(ngModel)]="medico.nombres" />
+        </div>
+
+        <div>
+            <label class="label-class" for="apellidos">Apellidos:</label>
+            <input type="text" id="apellidos" name="apellidos" required placeholder="Apellidos medico"
+                [(ngModel)]="medico.apellidos" />
+        </div>
+        <div>
+            <label class="label-class" for="especialidad">Especialidad:</label>
+
+
+
+            <select id="especialidad" name="especialidad" [(ngModel)]="medico.especialidad" required>
+
+                @for (item of especialidades; track $index) {
+
+                <option [value]="item">
+                    {{ item }}
+                </option>
+                }
+            </select>
+
+
+
+
+        </div>
+
+        <div>
+            <button (click)="registrarMedico()" type="submit"><i class="bi bi-floppy"></i> Guardar</button>
+        </div>
+    </form>
+
+</div>

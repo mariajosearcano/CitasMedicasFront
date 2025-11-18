@@ -1,0 +1,28 @@
+<div class="center-form">
+
+    <form>
+        <h2>Registrar Nueva Cita Médica</h2>
+        <p> <strong>Paciente: <span>{{ paciente.nombres + ' ' + paciente.apellidos }}</span></strong></p>
+        <img class="img-responsive" src="../../assets/registra-paciente-form.png">
+        <div>
+            <label for="fechaCita">Fecha de la cita:</label>
+            <input type="datetime-local" id="fechaCita" name="fechaCita" [(ngModel)]="cita.fechaCita" required />
+        </div>
+
+        <div>
+            <label for="idMedico">Seleccione un médico:</label>
+            <select id="idMedico" name="idMedico" [(ngModel)]="cita.idMedico">
+
+                @for (item of medicos; track $index) {
+
+                    <option [value]="item.idMedico" >
+                        {{item.especialidad + ' - ' + item.nombres + ' ' + item.apellidos }} 
+                    </option>
+                }
+            </select>
+        </div>
+
+        <button type="submit" (click)="registrarCita()">Registrar Cita</button>
+    </form>
+
+</div>

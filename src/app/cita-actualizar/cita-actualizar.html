@@ -1,0 +1,20 @@
+<div class="center-form">
+
+    <form>
+        <h2>Actualizar Cita Médica</h2>
+        <p> <strong>Paciente: <span>{{ cita.paciente.nombres + ' ' + cita.paciente.apellidos }}</span></strong></p>
+        <img class="img-responsive" src="../../assets/registra-paciente-form.png">
+        <div>
+            <label for="fechaCita">Fecha de la cita:</label>
+            <input type="datetime-local" id="fechaCita" name="fechaCita" [(ngModel)]="cita.fechaCita" required />
+        </div>
+
+        <div>
+            <p> <strong>Médico: <span>{{ cita.medico.nombres + ' ' + ' - ' +
+                        cita.medico.especialidad }}</span></strong></p>
+        </div>
+
+        <button type="submit" (click)="actualizarCita()">Registrar Cita</button>
+    </form>
+
+</div>

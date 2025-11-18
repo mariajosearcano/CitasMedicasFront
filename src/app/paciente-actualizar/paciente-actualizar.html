@@ -1,0 +1,32 @@
+<div class="center-form">
+
+  <form>
+    <h3>Editar paciente</h3>
+    <img class="img-responsive" src="../../assets/registra-paciente-form.png">
+
+    <div>
+      <label class="label-class" for="nombres">Nombres:</label>
+      <input type="text" id="nombres" name="nombres" required placeholder="Nombres paciente" [(ngModel)]="paciente.nombres" />
+    </div>
+
+    <div>
+      <label class="label-class" for="apellidos">Apellidos:</label>
+      <input type="text" id="apellidos" name="apellidos" required placeholder="Apellidos paciente"[(ngModel)]="paciente.apellidos"  />
+    </div>
+
+    <div>
+      <label class="label-class" for="email">Correo electrónico:</label>
+      <input type="email" id="email" name="email" required placeholder="example@correo.com" [(ngModel)]="paciente.email" />
+    </div>
+
+    <div>
+      <label class="label-class" for="fechaNacimiento">Fecha de nacimiento:</label>
+      <input type="date" id="fechaNacimiento" name="fechaNacimiento" [(ngModel)]="paciente.fechaNacimiento" required />
+    </div>
+
+    <div>
+      <button (click)="guardarPaciente()" type="submit"><i class="bi bi-floppy"></i> Guardar</button>
+    </div>
+  </form>
+
+</div>
