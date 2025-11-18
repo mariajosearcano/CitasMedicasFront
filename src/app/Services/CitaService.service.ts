@@ -13,99 +13,81 @@ export class CitaService {
 
   constructor(private httpClient: HttpClient) { }
 
-  /**
-   * Obtiene la lista paginada de citas
-   */
+  // ==================== MÉTODOS DE LISTADO ====================
+  
   getCitasPage(page: number, size: number): Observable<any> {
     const params = new HttpParams()
       .set('page', page.toString())
       .set('size', size.toString());
-    
     return this.httpClient.get(`${this.baseURL}`, { params });
   }
 
-  /**
-   * Alias para compatibilidad
-   */
   obtenerListaCitas(page: number = 0, size: number = 10): Observable<any> {
     return this.getCitasPage(page, size);
   }
 
-  /**
-   * Obtiene una cita por su ID
-   */
+  // ==================== MÉTODOS DE OBTENER POR ID ====================
+  
   obtenerCitaPorId(id: number): Observable<Cita> {
     return this.httpClient.get<Cita>(`${this.baseURL}/${id}`);
   }
 
-  /**
-   * Alias para compatibilidad
-   */
   getCitaById(id: number): Observable<Cita> {
     return this.obtenerCitaPorId(id);
   }
 
-  /**
-   * Registra una nueva cita
-   */
+  // ==================== MÉTODOS DE CREAR ====================
+  
   registrarCita(cita: Cita): Observable<Cita> {
     return this.httpClient.post<Cita>(`${this.baseURL}/save`, cita);
   }
 
-  /**
-   * Alias para compatibilidad
-   */
   addCita(cita: Cita): Observable<Cita> {
     return this.registrarCita(cita);
   }
 
-  /**
-   * Alias para compatibilidad
-   */
   saveCita(cita: Cita): Observable<Cita> {
     return this.registrarCita(cita);
   }
 
-  /**
-   * Actualiza una cita existente
-   */
+  // ==================== MÉTODOS DE ACTUALIZAR ====================
+  
   actualizarCita(id: number, cita: Cita): Observable<Cita> {
     return this.httpClient.put<Cita>(`${environment.apiUrl}/updateCita/${id}`, cita);
   }
 
-  /**
-   * Alias para compatibilidad
-   */
   updateCita(id: number, cita: Cita): Observable<Cita> {
     return this.actualizarCita(id, cita);
   }
 
-  /**
-   * Elimina una cita por su ID
-   */
+  editCita(id: number, cita: Cita): Observable<Cita> {
+    return this.actualizarCita(id, cita);
+  }
+
+  // ==================== MÉTODOS DE ELIMINAR ====================
+  
   eliminarCita(id: number): Observable<any> {
     return this.httpClient.delete(`${environment.apiUrl}/deleteCita/${id}`);
   }
 
-  /**
-   * Alias para compatibilidad
-   */
   deleteCita(id: number): Observable<any> {
     return this.eliminarCita(id);
   }
 
-  /**
-   * Descarga el reporte XML de todas las citas
-   */
+  // ==================== MÉTODOS DE REPORTES ====================
+  
   descargarReporteXML(): Observable<Blob> {
     return this.httpClient.get(this.xmlURL, {
       responseType: 'blob'
     });
   }
 
-  /**
-   * Obtiene el XML como texto
-   */
+  descargarReporte(): Observable<string> {
+    return this.httpClient.get(this.xmlURL, {
+      responseType: 'text'
+    });
+  }
+
   obtenerReporteXMLTexto(): Observable<string> {
     return this.httpClient.get(this.xmlURL, {
       responseType: 'text'
